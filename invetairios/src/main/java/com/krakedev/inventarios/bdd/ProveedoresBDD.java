@@ -5,9 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.krakedev.inventarios.entidades.Categoria;
+import com.krakedev.inventarios.entidades.DetallePedido;
+import com.krakedev.inventarios.entidades.Pedido;
 import com.krakedev.inventarios.entidades.Producto;
 import com.krakedev.inventarios.entidades.Proveedor;
 import com.krakedev.inventarios.entidades.TipoDato;
@@ -178,6 +182,59 @@ public class ProveedoresBDD {
 			ps.setInt(7, producto.getStock());
 	
 			ps.executeUpdate();
+		} catch (krakedevException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new krakedevException("error al consultar.detalle: " + e.getMessage());
+		}
+
+	}
+	public void insertarPedido(Pedido pedido) throws krakedevException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		PreparedStatement psdet = null;
+		ResultSet cleve =null;
+		int codigoCabecera=0;
+		
+		Date fechaActual = new Date();
+		java.sql.Date fechaSQL =new  java.sql.Date (fechaActual.getTime());
+		
+		try {
+			con = coneccionBDD.obtenerConection();
+			ps = con.prepareStatement("insert into cabecera_pedido(proveedores,fecha,estado) "
+					+ "values (?,?,?);",Statement.RETURN_GENERATED_KEYS);	
+			ps.setString(1, pedido.getProveedor().getIdentificador());
+			ps.setDate(2, fechaSQL);
+			ps.setString(3, "S");
+			
+			ps.executeUpdate();
+			
+			cleve=ps.getGeneratedKeys();
+			
+			if(cleve.next()) {
+				codigoCabecera=cleve.getInt(1);
+			}
+			
+			ArrayList<DetallePedido> detallesPedidos=pedido.getDetalles();
+			DetallePedido dp=null;
+			for(int i=0;i<detallesPedidos.size();i++) {
+				dp=detallesPedidos.get(i);
+				psdet=con.prepareStatement("insert into detalle_pedido (cabecera_pedido,producto,cantidad_solicitada,subtotal,cantidad_recibida) "
+						+ "values (?,?,?,?,?);");
+				psdet.setInt(1, codigoCabecera);
+				psdet.setInt(2, dp.getProducto().getCodigo());
+				psdet.setInt(3, dp.getCantidadSolicitada());
+				psdet.setInt(5, 0) ;
+				BigDecimal pv=dp.getProducto().getPrecioVenta();
+				BigDecimal cantidad=new BigDecimal(dp.getCantidadRecivida());
+				BigDecimal subtotal=pv.multiply(cantidad);
+				psdet.setBigDecimal(4, subtotal);
+				
+				psdet.executeUpdate();
+			}
+			
 		} catch (krakedevException e) {
 			e.printStackTrace();
 			throw e;
