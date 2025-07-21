@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.krakedev.inventarios.bdd.ProveedoresBDD;
+import com.krakedev.inventarios.entidades.Producto;
 import com.krakedev.inventarios.entidades.Proveedor;
 import com.krakedev.inventarios.entidades.TipoDato;
 import com.krakedev.iventarios.excepciones.krakedevException;
@@ -62,6 +63,37 @@ public class ServiciosProveedores {
 		ProveedoresBDD provBDD = new ProveedoresBDD();
 		try {
 			provBDD.insertar(proveedor);
+			return Response.ok().build();
+		} catch (krakedevException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+
+	}
+	@Path("buscarProductos/{sub}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarProductos(@PathParam("sub") String subCadena) {
+
+		ArrayList<Producto> Productos = null;
+		ProveedoresBDD provBDD = new ProveedoresBDD();
+		try {
+			Productos = provBDD.buscarProductos(subCadena);
+			return Response.ok(Productos).build();
+		} catch (krakedevException e) {
+
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+
+	}
+	@Path("crearProducto")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response crearProducto(Producto producto) {
+		ProveedoresBDD provBDD = new ProveedoresBDD();
+		try {
+			provBDD.insertarproductos(producto);
 			return Response.ok().build();
 		} catch (krakedevException e) {
 			e.printStackTrace();
