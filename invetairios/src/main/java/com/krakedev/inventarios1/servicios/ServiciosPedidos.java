@@ -2,6 +2,7 @@ package com.krakedev.inventarios1.servicios;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,6 +20,20 @@ public class ServiciosPedidos {
 		ProveedoresBDD provBDD = new ProveedoresBDD();
 		try {
 			provBDD.insertarPedido(pedido);
+			return Response.ok().build();
+		} catch (krakedevException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+
+	}
+	@Path("recibir")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response recibir(Pedido pedido) {
+		ProveedoresBDD provBDD = new ProveedoresBDD();
+		try {
+			provBDD.resivirPedido(pedido);
 			return Response.ok().build();
 		} catch (krakedevException e) {
 			e.printStackTrace();

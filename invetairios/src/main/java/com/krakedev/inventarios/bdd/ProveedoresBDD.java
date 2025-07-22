@@ -228,7 +228,7 @@ public class ProveedoresBDD {
 				psdet.setInt(3, dp.getCantidadSolicitada());
 				psdet.setInt(5, 0) ;
 				BigDecimal pv=dp.getProducto().getPrecioVenta();
-				BigDecimal cantidad=new BigDecimal(dp.getCantidadRecivida());
+				BigDecimal cantidad=new BigDecimal(dp.getCantidadSolicitada());
 				BigDecimal subtotal=pv.multiply(cantidad);
 				psdet.setBigDecimal(4, subtotal);
 				
@@ -244,4 +244,48 @@ public class ProveedoresBDD {
 		}
 
 	}
+	public void resivirPedido(Pedido pedido) throws krakedevException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		PreparedStatement psdet = null;
+		ResultSet cleve =null;
+		
+		Date fechaActual = new Date();
+		java.sql.Date fechaSQL =new  java.sql.Date (fechaActual.getTime());
+		
+		try {
+			con = coneccionBDD.obtenerConection();
+			ps = con.prepareStatement("update cabecera_pedido  set estado='R'  where numero=?");	
+			ps.setInt(1, pedido.getCodigo());
+
+			ps.executeUpdate();
+			
+			ArrayList<DetallePedido> detallesPedidos=pedido.getDetalles();
+			DetallePedido dp=null;
+			for(int i=0;i<detallesPedidos.size();i++) {
+				dp=detallesPedidos.get(i);
+				psdet=con.prepareStatement("update detalle_pedido  "
+						+ "set cantidad_recibida=?, subtotal=?  "
+						+ "where codigo=?");
+				psdet.setInt(1, dp.getCantidadRecivida());
+				
+				BigDecimal pv=dp.getProducto().getPrecioVenta();
+				BigDecimal cantidad=new BigDecimal(dp.getCantidadRecivida());
+				BigDecimal subtotal=pv.multiply(cantidad);
+				psdet.setBigDecimal(2, subtotal);
+				psdet.setInt(3, dp.getCodigo());
+				
+				psdet.executeUpdate();
+			}
+			
+		} catch (krakedevException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new krakedevException("error al consultar.detalle: " + e.getMessage());
+		}
+
+	}
+
 }
