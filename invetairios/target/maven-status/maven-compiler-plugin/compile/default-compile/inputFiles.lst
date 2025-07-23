@@ -1,3 +1,4 @@
+C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\CabeceraVentas.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios1\servicios\ServiciosProveedores.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\CategoriasUnidadMedidas.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\utils\coneccionBDD.java
@@ -5,6 +6,7 @@ C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\kr
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\Pedido.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\TipoDato.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\bdd\ProveedoresBDD.java
+C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\DetalleVentas.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\UnidadesMedida.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios1\resources\JavaEE8Resource.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\Producto.java
@@ -14,4 +16,5 @@ C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\kr
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\Categoria.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios1\JAXRSConfiguration.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios\entidades\EstadoPedido.java
+C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\inventarios1\servicios\serviciosVentas.java
 C:\Users\USER\OneDrive\Documentos\modulo 3\Java\invetairios\src\main\java\com\krakedev\iventarios\excepciones\krakedevException.java
