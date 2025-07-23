@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -233,6 +234,7 @@ public class ProveedoresBDD {
 				psdet.setBigDecimal(4, subtotal);
 				
 				psdet.executeUpdate();
+							
 			}
 			
 		} catch (krakedevException e) {
@@ -251,7 +253,7 @@ public class ProveedoresBDD {
 		ResultSet cleve =null;
 		
 		Date fechaActual = new Date();
-		java.sql.Date fechaSQL =new  java.sql.Date (fechaActual.getTime());
+		Timestamp fechaHoraActual=new Timestamp(fechaActual.getTime());
 		
 		try {
 			con = coneccionBDD.obtenerConection();
@@ -274,6 +276,15 @@ public class ProveedoresBDD {
 				BigDecimal subtotal=pv.multiply(cantidad);
 				psdet.setBigDecimal(2, subtotal);
 				psdet.setInt(3, dp.getCodigo());
+				
+				psdet.executeUpdate();
+				
+				psdet=con.prepareStatement("insert into historia_Stock (fecha,referecia,producto,cantidad)"
+						+ "values (?,?,?,?);");
+				psdet.setTimestamp(1, fechaHoraActual);
+				psdet.setString(2, "PEDIDO "+dp.getCodigo());
+				psdet.setInt(3, dp.getProducto().getCodigo());
+				psdet.setInt(4, dp.getCantidadRecivida());
 				
 				psdet.executeUpdate();
 			}
